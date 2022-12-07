@@ -3,16 +3,16 @@ const API_KEY = require('../api_key')
 
 const forecast = (latitude, longitude, callback) => {
     const url = `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${latitude},${longitude}`;
-    request({url, json: true}, (err, res) => {
+    request({url, json: true}, (err, {body}) => {
         if (err) {
             callback('Unable to connect to location services!', undefined);
-        } else if (res.body.error) {
+        } else if (body.error) {
             callback('Unable to find location. Try another search. ', undefined);
         } else {
             callback(undefined, {
-                temperature: res.body.current.temperature,
-                tempSensation: res.body.current.feelslike,
-                weatherDescription: res.body.current.weather_descriptions[0],
+                temperature: body.current.temperature,
+                tempSensation: body.current.feelslike,
+                weatherDescription: body.current.weather_descriptions[0],
             });
         }
     }); 
