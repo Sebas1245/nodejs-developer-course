@@ -50,7 +50,7 @@ app.get('/weather', (req, res) => {
             error: 'An address must be provided',
         })
     }
-    geocode(address, (err, {latitude, longitude}) => {
+    geocode(address, (err, {latitude, longitude, location} = {}) => {
         if (err) {
             console.log(err);
             return res.send({
@@ -68,7 +68,9 @@ app.get('/weather', (req, res) => {
                 return res.send({
                     temperature,
                     tempSensation,
-                    weatherDescription
+                    weatherDescription,
+                    address,
+                    location,
                 });
         });
     });
